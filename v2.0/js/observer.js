@@ -16,7 +16,7 @@ function defineReactive (data, key, val) {
       }
       val = newVal;
       console.log('属性' + key + '已被监听，现在值已被修改为："' + newVal.toString() + '"');
-      Dep.notify(); // 如果数据变化，通知所有订阅者
+      dep.notify(); // 如果数据变化，通知所有订阅者
     }
   })
 }
@@ -36,7 +36,7 @@ function Dep() {
   this.subs = [];
 }
 
-Dep.protptype = {
+Dep.prototype = {
   addSub: function (sub) {
     this.subs.push(sub);
   },
