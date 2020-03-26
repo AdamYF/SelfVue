@@ -1,3 +1,4 @@
+// 将 Observer 和 Watcher 关联起来
 function SelfVue(data, el, exp) {
   this.data = data;
   observe(data);
