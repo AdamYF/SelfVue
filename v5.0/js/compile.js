@@ -1,8 +1,20 @@
-function Compile() {
-
+function Compile(el, vm) {
+  this.vm = vm;
+  this.el = document.querySelector(el);
+  this.fragment = null;
+  this.init();
 }
 
 Compile.prototype = {
+  init: function () {
+    if (this.el) {
+      this.fragment = this.nodeToFragment(this.el);
+      this.compileElement(this.fragment);
+      this.el.appendChild(this.fragment);
+    } else {
+      console.log('Dom元素不存在');
+    }
+  },
   // 为了解析模板，首先要获取dom元素，并对其上含有指令的节点进行处理，因此需要对dom操作比较频繁
   // 所以，先建一个fragment片段，将需要解析的dom节点存入fragment片段里再进行处理
   nodeToFragment: function (el) {
@@ -43,6 +55,9 @@ Compile.prototype = {
   },
   updateText: function (node, value) {
     node.textContent = typeof value == 'undefined' ? '' : value;
+  },
+  isTextNode: function (node) {
+    return node.nodeType == 3;
   }
 }
 
