@@ -30,7 +30,7 @@ Compile.prototype = {
   // 遍历各个节点，对含有指令的节点进行特殊处理
   // 先处理最简单的情况，'{{ 变量 }}'形式的指令
   compileElement: function (el) {
-    var childNodes = el.chilsNodes;
+    var childNodes = el.childNodes;
     var self = this;
     [].slice.call(childNodes).forEach(function(node) {
       var reg = /\{\{(.*)\}\}/;
