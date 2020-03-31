@@ -1,13 +1,13 @@
 function SelfVue(options) {
   var self = this;
   this.vm = this;
-  this.data = options;
+  this.data = options.data;
   // Object.keys() 方法会返回一个由给定对象自身可枚举属性组成的数组
   Object.keys(this.data).forEach(function (key) {
     self.proxyKeys(key); // 绑定代理属性
   });
-  observe(this.data);
-  new Compile(options, this.vm);
+  observe(options.data);
+  new Compile(options.el, this.vm);
   return this;
 }
 
