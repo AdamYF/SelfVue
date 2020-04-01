@@ -29,16 +29,20 @@ Compile.prototype = {
   },
   // 遍历各个节点，对含有指令的节点进行特殊处理
   // 先处理最简单的情况，'{{ 变量 }}'形式的指令
-  compileElement: function (el) {
-    var childNodes = el.childNodes;
+  compileElement: function (el) {   // 遍历各个节点,对含有相关指定的节点进行特殊处理
+    var childNodes = el.childNodes; // childNodes属性返回节点的子节点集合，即 NodeList 对象
     var self = this;
+    // [].slice.call()方法将传入的非数组对象浅拷贝为一个数组
+    // 这里，NodeList 对象被转换为 node 对象的数组
     [].slice.call(childNodes).forEach(function(node) {
       var reg = /\{\{(.*)\}\}/;
-      var text = node.textContent;
+      var text = node.textContent; // textContent 属性设置或返回指定节点的文本内容
 
       if (self.isElementNode(node)) {
         self.compile(node);
-      } else if (self.isTextNode(node) && reg.test(text)) {
+      } else if (self.isTextNode(node) && reg.test(text)) { // 判断是否符合{{}}的指令
+        // exec() 方法用于检索字符串中的正则表达式的匹配
+        // 此方法会返回一个数组，其中存放匹配的结果。如果未找到匹配，则返回值为 null
         self.compileText(node, reg.exec(text)[1]);
       }
 
@@ -47,15 +51,16 @@ Compile.prototype = {
       }
     });
   },
-  compile: function(node) {
-    var nodeAttrs = node.attributes;
+  compile: function (node) {
+    var nodeAttrs = node.attributes; // attributes 属性返回指定节点的属性集合，即 NamedNodeMap
     var self = this;
+    // Array.prototype属性表示Array构造函数的原型，本身就是一个Array
     Array.prototype.forEach.call(nodeAttrs, function(attr) {
-      var attrName = attr.name;
+      var attrName = attr.name; // 添加事件的方法名和前缀:v-on:click="onClick"，则attrName='v-on:click' id="app" attrname= 'id'
       if (self.isDirective(attrName)) {
-        var exp = attr.value;
-        var dir = attrName.substring(2);
-        if (self.isEventDirective(dir)) { // 事件指令
+        var exp = attr.value; // 添加事件的方法名和前缀:v-on:click="onClick"，exp = 'onClick'
+        var dir = attrName.substring(2); // substring() 方法用于提取字符串中介于两个指定下标之间的字符，dir = 'on:click'
+        if (self.isEventDirective(dir)) { // v-on事件指令
             self.compileEvent(node, self.vm, exp, dir);
         } else { //v-model指令
             self.compileModel(node, self.vm, exp, dir);

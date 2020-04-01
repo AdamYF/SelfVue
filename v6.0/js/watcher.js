@@ -2,7 +2,7 @@ function Watcher(vm, exp, cb) {
   this.vm = vm;   // 指向SelfVue的作用域
   this.exp = exp; // 绑定属性的key值
   this.cb = cb;   // 闭包
-  this.value = this.get();
+  this.value = this.get(); // 将自己添加做订阅器中
 }
 
 Watcher.prototype = {
