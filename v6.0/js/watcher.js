@@ -24,4 +24,3 @@ Watcher.prototype = {
     return value;
   }
 }
-

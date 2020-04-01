@@ -34,7 +34,7 @@ Observer.prototype = {
   }
 }
 
-function observe (data) {
+function observe(data) {
   if (!data || typeof data !== 'object') {
     return;
   }
@@ -58,4 +58,3 @@ Dep.prototype = {
   }
 }
 Dep.target = null;
-

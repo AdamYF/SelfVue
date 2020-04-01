@@ -73,7 +73,7 @@ Compile.prototype = {
       self.updateText(node, value);
     });
   },
-  compileEvent: function(node, vm, exp, dir) {
+  compileEvent: function (node, vm, exp, dir) {
     var eventType = dir.split(':')[1];
     var cb = vm.methods && vm.methods[exp];
 
@@ -81,7 +81,7 @@ Compile.prototype = {
       node.addEventListener(eventType, cb.bind(vm), false);
     }
   },
-  compileModel: function(node, vm, exp, dir) {
+  compileModel: function (node, vm, exp, dir) {
     var self = this;
     var val = this.vm[exp];
     this.modelUpdater(node, val);
@@ -98,23 +98,24 @@ Compile.prototype = {
       val = newValue;
     });
   },
+
+  // 辅助方法
   updateText: function (node, value) {
     node.textContent = typeof value == 'undefined' ? '' : value;
   },
-  isTextNode: function (node) {
-    return node.nodeType == 3;
-  },
-  modelUpdater: function(node, value, oldValue) {
+  modelUpdater: function (node, value, oldValue) {
     node.value = typeof value == 'undefined' ? '' : value;
   },
-  isDirective: function(attr) {
+  isDirective: function (attr) {
     return attr.indexOf('v-') == 0;
   },
-  isEventDirective: function(dir) {
+  isEventDirective: function (dir) {
     return dir.indexOf('on:') == 0;
   },
-  isElementNode: function(node) {
+  isElementNode: function (node) {
     return node.nodeType == 1;
+  },
+  isTextNode: function (node) {
+    return node.nodeType == 3;
   }
 }
-

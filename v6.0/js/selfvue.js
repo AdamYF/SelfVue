@@ -26,4 +26,3 @@ SelfVue.prototype = {
     });
   }
 }
-
